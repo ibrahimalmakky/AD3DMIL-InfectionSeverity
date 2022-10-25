@@ -1,19 +1,11 @@
-# Attention Based Deep 3D Multiple Instance Learning
+# Attention Based Deep 3D Multiple Instance Learning for COVID-19 Infection Severity Classification
 
 ## Prerequisites:
 
-* Python3
-* PyTorch ==1.4.0 (with suitable CUDA and CuDNN version)
-* torchvision == 0.5.0
-* Numpy
-* argparse
-* PIL
-* tqdm
-* SimpleITK
-* cv2
-* skimage
-* scipy
-* pydicom
+Requirements available in "./requirements.txt". Install using:
+```
+pip3 install -r requirements.txt
+```
 
 ## Dataset:
 
