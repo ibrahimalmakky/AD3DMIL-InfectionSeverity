@@ -34,6 +34,7 @@ NUM_WORKERS = int(cfg["DATALOADER"]["NUM_WORKERS"])
 LOG_FILE = cfg["SOLVER"]["LOG_FILE"]
 SNAPSHOT_MODEL_TPL = cfg["SOLVER"]["SNAPSHOT_MODEL_TPL"]
 LEARNING_RATE = float(cfg["SOLVER"]["LEARNING_RATE"])
+CLASS_WEIGHTS = list(cfg["SOLVER"]["WEIGHTS"])
 WEIGHT_DECAY = float(cfg["SOLVER"]["WEIGHT_DECAY"])
 LR_DECAY = float(cfg["SOLVER"]["LR_DECAY"])
 TRAIN_EPOCH = int(cfg["SOLVER"]["TRAIN_EPOCH"])
@@ -46,7 +47,7 @@ RESUME_BOOL = bool(INIT_MODEL_PATH != "")
 
 model = import_module(f"model.{MODEL_UID}")
 ENModel = getattr(model, "ENModel")
-criterion = torch.nn.CrossEntropyLoss(reduction="mean")
+# criterion = torch.nn.CrossEntropyLoss(reduction="mean")
 
 ############### Set up Dataloaders ###############
 Trainset = CTDataset(datalist=TRAIN_DATA_ROOT, target='train',)
@@ -60,6 +61,7 @@ model = model.cuda()
 
 print(model)
 ############### Logging out some training info ###############
+os.makedirs(SNAPSHOT_HOME, exist_ok=True)
 logger = setup_logger(logfile=LOG_FILE)
 logger.info("Config {}...".format(CFG_FILE))
 logger.info("{}".format(json.dumps(cfg, indent=1)))
@@ -80,7 +82,7 @@ ValidLoader = torch.utils.data.DataLoader(Validset,
 optimizer = torch.optim.Adam([{"params": model.parameters(), "initial_lr": LEARNING_RATE}], 
                                                 lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 lr_scher = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=LR_DECAY, last_epoch=RESUME_EPOCH)
-criterion = torch.nn.CrossEntropyLoss(reduction="mean")
+criterion = torch.nn.CrossEntropyLoss(reduction="mean", weight=torch.tensor(CLASS_WEIGHTS).cuda())
 
 if INIT_MODEL_PATH != "":
     model.load_state_dict(torch.load(INIT_MODEL_PATH, \
@@ -89,9 +91,9 @@ if INIT_MODEL_PATH != "":
 logger.info("Do train...")
 
 ############### Logging out some training info ###############
-logger = setup_logger()
-os.makedirs(SNAPSHOT_HOME, exist_ok=True)
-logger = setup_logger(logfile=LOG_FILE)
+# logger = setup_logger()
+# os.makedirs(SNAPSHOT_HOME, exist_ok=True)
+# logger = setup_logger(logfile=LOG_FILE)
 
 dset_len, loader_len = len(Trainset), len(TrainLoader)
 logger.info("Setting Dataloader | dset: {} / loader: {}, | N: {}".format(\

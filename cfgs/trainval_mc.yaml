@@ -13,20 +13,21 @@ DATALOADER:
     CLIP_RANGE: [0.3, 0.7]
 
 SOLVER:
-    LEARNING_RATE: 1e-5
+    LEARNING_RATE: 1e-7
     WEIGHT_DECAY: 0
+    WEIGHTS: [1.28414097, 0.53048226, 2.9744898]
     LR_DECAY: 1
-    TRAIN_EPOCH: 100
+    TRAIN_EPOCH: 2000
     SNAPSHOT_FREQ: 10
     SNAPSHOT_HOME: "experiments"
-    SNAPSHOT_MODEL_TPL: "ncov-Epoch_{:05d}_mc.pth"
-    LOG_FILE: "experiments/train_MIL.log"
+    SNAPSHOT_MODEL_TPL: "ncov_lr_1e-7_with_weights-Epoch_{:05d}_mc.pth"
+    LOG_FILE: "experiments/train_MIL_27_10_22_lr_1e-7_with_weights.log"
     INIT_MODEL_PATH: ""
     INIT_MODEL_STRICT: "True"
     RESUME_EPOCH: 0
 
 DATASETS:
-    TRAIN_DATA_ROOT: "/home/ubuntu/nas/projects/CTScreen/dataset/train_mc-seg.text"
-    VAL_DATA_ROOT: "/home/ubuntu/nas/projects/CTScreen/dataset/val_mc-seg.text"
-    TEST_DATA_ROOT: "/home/ubuntu/nas/projects/CTScreen/dataset/test_mc-seg.text"
+    TRAIN_DATA_ROOT: "./dataset/train_hust-seg.text"
+    VAL_DATA_ROOT: "./dataset/val_hust-seg.text"
+    TEST_DATA_ROOT: "./dataset/test_hust-seg.text"
     CT_KEYDB: "CT_keydb.json"
