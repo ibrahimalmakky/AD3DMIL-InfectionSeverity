@@ -73,14 +73,14 @@ class CTDataset(data.Dataset):
 
     def debug(self, index):
         import cv2
-        th_img, th_label, info = self.__getitem__(0)
+        th_img, th_label, info = self.__getitem__(index)
         # th_img: NxCxTxHxW
         print(th_img.shape)
-        img, label = th_img.numpy()[0, 0, 100, :]*255, th_label.numpy()[0]
+        img, label = th_img.numpy()[0, 0, 50, :, :]*255, th_label.numpy()[0]
         #n, h, w = img.shape
         #print ("[DEBUG] Writing to {}".format(debug_f))
         print(label, info)
-        cv2.imwrite('test_6.jpg', img)
+        cv2.imwrite(f'test_{index}.jpg', img)
 
 
 if __name__ == "__main__":
