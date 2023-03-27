@@ -3,7 +3,7 @@ MODEL:
     ARCH: "i3d"
     DEPTH: 50
     NUM_CLASSES: 3
-    PRETRAINED_MODEL_PATH: "experiments/ncov-Epoch_00099_mc.pth"
+    PRETRAINED_MODEL_PATH: "./experiments/HUST/lr_1e-5_with_weights/ncov_lr_1e-5_with_weights-Epoch_00010_mc.pth"
 
 DATALOADER:
     BATCH_SIZE_PER_GPU: 1
@@ -11,8 +11,8 @@ DATALOADER:
     SAMPLE_NUMBER: -1     # All CT images
 
 DATASETS:
-    TEST_DATA_ROOT: "/home/ubuntu/nas/projects/CTScreen/dataset/test_mc-seg.text"
+    TEST_DATA_ROOT: "./dataset/val_hust-seg.text"
 
 TEST:
     LOG_FILE: "test.log"
-    RESULE_HOME: "experiments"
+    RESULE_HOME: "./experiments/HUST/lr_1e-5_with_weights"
